@@ -145,3 +145,150 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Những Thứ Về Vân Anh</title>
+<style>
+    body {
+        background: linear-gradient(to right, #ffcccc, #ffe6f0);
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: auto;
+        position: relative;
+        height: 2000px; /* Để có không gian cuộn nếu cần */
+    }
+
+    .center-text {
+        font-size: 42px;
+        text-align: center;
+        font-weight: bold;
+        margin: 30px 0 20px;
+        color: #d6336c;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .image-row {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        flex-wrap: wrap;
+        margin: 20px 0;
+    }
+
+    .image-row img {
+        height: 300px;
+        width: auto;
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .image-row img:hover {
+        transform: scale(1.1); /* phóng to khi hover */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+        font-size: 34px;
+        font-weight: bold;
+        margin: 25px 20px 10px;
+        border-left: 6px solid #d6336c;
+        padding-left: 12px;
+        color: #d6336c;
+    }
+
+    ul {
+        font-size: 22px;
+        margin: 10px 40px 30px;
+        line-height: 1.6;
+        list-style-type: square;
+    }
+
+    ul li:hover {
+        color: #ff3399;
+        font-weight: bold;
+    }
+
+    .heart-image {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        pointer-events: none; /* để không ảnh hưởng chuột */
+    }
+</style>
+</head>
+<body>
+
+<p class="center-text">NHỮNG THỨ VỀ VÂN ANH</p>
+
+<div class="image-row">
+    <img src="VanAnh.jpg" alt="Vân Anh">
+    <img src="VanAnh1.jpg" alt="Vân Anh 1">
+</div>
+
+<h1 class="section-title">QUÊ QUÁN</h1>
+<ul>
+    <li>Hải Phòng</li>
+    <li>Sinh năm 2k15</li>
+</ul>
+
+<h1 class="section-title">CÁC SỞ THÍCH</h1>
+<ul>
+    <li>Hát</li>
+    <li>Vẽ</li>
+    <li>Đi chơi</li>
+</ul>
+
+<h1 class="section-title">TÍNH CÁCH & NGOẠI HÌNH</h1>
+<ul>
+    <li>Hiền dịu</li>
+    <li>Giản dị</li>
+    <li>Hay chăm sóc người khác</li>
+    <li>Xinh đẹp</li>
+    <li>Dễ thương</li>
+    <li>Hay giận dỗi</li>
+    <li>Không đanh đá</li>
+</ul>
+
+<script>
+    const numHearts = 20; // số lượng trái tim
+    const heartImgSrc = "images/traitim.jpg"; // đường dẫn ảnh trái tim
+
+    const hearts = [];
+
+    for(let i = 0; i < numHearts; i++){
+        const heart = document.createElement("img");
+        heart.src = heartImgSrc;
+        heart.className = "heart-image";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = (window.innerHeight + Math.random() * 500) + "px"; // bắt đầu từ dưới màn hình
+        heart.speedY = 1 + Math.random() * 2; // tốc độ bay lên khác nhau
+        document.body.appendChild(heart);
+        hearts.push(heart);
+    }
+
+    function animateHearts(){
+        hearts.forEach(heart => {
+            let y = parseFloat(heart.style.top);
+            y -= heart.speedY; // bay lên
+
+            if(y < -50){ // khi ra khỏi màn hình trên
+                y = window.innerHeight + 100; // quay lại dưới cùng
+                heart.style.left = Math.random() * window.innerWidth + "px"; // vị trí x mới
+            }
+
+            heart.style.top = y + "px";
+        });
+
+        requestAnimationFrame(animateHearts);
+    }
+
+    animateHearts();
+</script>
+
+</body>
+</html>
