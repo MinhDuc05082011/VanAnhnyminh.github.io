@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Những Thứ Về Vân Anh</title>
     <style>
-
         body {
             background: linear-gradient(to right, #ffcccc, #ffe6f0);
             margin: 0;
@@ -22,7 +21,6 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
 
-        /* Hàng ảnh */
         .image-row {
             display: flex;
             justify-content: center;
@@ -44,7 +42,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.35);
         }
 
-        /* Tiêu đề từng phần */
         .section-title {
             font-size: 34px;
             font-weight: bold;
@@ -54,7 +51,6 @@
             color: #d6336c;
         }
 
-        /* Danh sách */
         ul {
             font-size: 22px;
             margin: 10px 40px 30px;
@@ -62,13 +58,38 @@
             list-style-type: square;
         }
 
-        /* Hiệu ứng khi rê chuột vào các mục */
         ul li:hover {
             color: #ff3399;
             font-weight: bold;
         }
 
-        /* Responsive trên màn hình nhỏ */
+        /* Trò chơi chọn đáp án */
+        .game {
+            margin: 30px 20px;
+            text-align: center;
+        }
+
+        .game button {
+            margin: 8px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .game button:hover {
+            transform: scale(1.05);
+            background: #ff99cc;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             .image-row {
                 flex-direction: column;
@@ -79,12 +100,17 @@
                 height: 250px;
                 margin-bottom: 15px;
             }
+
+            .game button {
+                width: 80%;
+            }
         }
     </style>
 </head>
 <body>
+
     <p class="center-text">NHỮNG THỨ VỀ VÂN ANH</p>
-    
+
     <div class="image-row">
         <img src="VanAnh.jpg" alt="Vân Anh">
         <img src="VanAnh1.jpg" alt="Vân Anh 1">
