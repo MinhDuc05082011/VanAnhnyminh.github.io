@@ -10,9 +10,9 @@
         margin: 0;
         padding: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        overflow: auto;
+        overflow-x: hidden;
         position: relative;
-        height: 2000px; /* Để có không gian cuộn nếu cần */
+        min-height: 2000px;
     }
 
     .center-text {
@@ -41,7 +41,7 @@
     }
 
     .image-row img:hover {
-        transform: scale(1.1); /* phóng to khi hover */
+        transform: scale(1.1);
         box-shadow: 0 10px 20px rgba(0,0,0,0.35);
     }
 
@@ -66,11 +66,24 @@
         font-weight: bold;
     }
 
+    /* Trái tim bay lên */
     .heart-image {
         width: 40px;
         height: 40px;
         position: absolute;
-        pointer-events: none; /* để không ảnh hưởng chuột */
+        pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+        .image-row {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-row img {
+            height: 250px;
+            margin-bottom: 15px;
+        }
     }
 </style>
 </head>
@@ -110,16 +123,15 @@
 <script>
     const numHearts = 20; // số lượng trái tim
     const heartImgSrc = "traitim.jpg"; // đường dẫn ảnh trái tim
-
     const hearts = [];
 
-    for(let i = 0; i < numHearts; i++){
+    for(let i=0; i<numHearts; i++){
         const heart = document.createElement("img");
         heart.src = heartImgSrc;
         heart.className = "heart-image";
         heart.style.left = Math.random() * window.innerWidth + "px";
         heart.style.top = (window.innerHeight + Math.random() * 500) + "px"; // bắt đầu từ dưới màn hình
-        heart.speedY = 1 + Math.random() * 2; // tốc độ bay lên khác nhau
+        heart.speedY = 1 + Math.random() * 2; // tốc độ bay lên
         document.body.appendChild(heart);
         hearts.push(heart);
     }
@@ -127,11 +139,11 @@
     function animateHearts(){
         hearts.forEach(heart => {
             let y = parseFloat(heart.style.top);
-            y -= heart.speedY; // bay lên
+            y -= heart.speedY;
 
-            if(y < -50){ // khi ra khỏi màn hình trên
-                y = window.innerHeight + 100; // quay lại dưới cùng
-                heart.style.left = Math.random() * window.innerWidth + "px"; // vị trí x mới
+            if(y < -50){
+                y = window.innerHeight + 50;
+                heart.style.left = Math.random() * window.innerWidth + "px";
             }
 
             heart.style.top = y + "px";
