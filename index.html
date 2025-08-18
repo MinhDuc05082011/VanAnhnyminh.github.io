@@ -8,10 +8,11 @@
     body {
         background: linear-gradient(to right, #ffcccc, #ffe6f0);
         margin: 0;
-        padding: 0 0 300px 0;
+        padding: 0 0 400px 0; /* thêm khoảng trống cuối trang */
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         overflow-x: hidden;
         position: relative;
+        min-height: 100vh;
     }
 
     .center-text {
@@ -33,7 +34,6 @@
 
     .image-row img {
         height: 300px;
-        width: auto;
         border-radius: 15px;
         box-shadow: 0 6px 15px rgba(0,0,0,0.25);
         transition: transform 0.3s, box-shadow 0.3s;
@@ -68,13 +68,13 @@
     /* Nút bấm */
     .btn-change {
         display: block;
-        margin: 40px auto;
-        padding: 14px 30px;
-        font-size: 22px;
+        margin: 40px auto 20px;
+        padding: 12px 25px;
+        font-size: 20px;
         background-color: #d6336c;
         color: white;
         border: none;
-        border-radius: 10px;
+        border-radius: 8px;
         cursor: pointer;
         transition: background-color 0.3s;
     }
@@ -83,9 +83,9 @@
         background-color: #ff3399;
     }
 
-    /* ảnh xuất hiện dưới nút */
+    /* ảnh bất ngờ */
     .surprise-image {
-        display: none;
+        display: flex;
         justify-content: center;
         margin: 20px 0;
     }
@@ -104,6 +104,7 @@
         height: 40px;
         animation: floatUp 4s linear forwards;
         pointer-events: none;
+        z-index: 999;
     }
 
     @keyframes floatUp {
@@ -151,16 +152,22 @@
     <li>Không đanh đá</li>
 </ul>
 
-<!-- Nút bấm -->
+<!-- Nút bấm ở dưới cùng -->
 <button class="btn-change" id="changeBtn">Bấm để bất ngờ 💖</button>
 
 <!-- Ảnh xuất hiện dưới nút -->
-<div class="surprise-image" id="surpriseImage">
+<div class="surprise-image" id="surpriseImage" style="display:none;">
     <img id="autoImg" src="" alt="Bất ngờ">
 </div>
 
 <script>
-    const imageSets = ["cloud.jpg", "VanAnh2.jpg", "ntn.jpg"];
+    // Danh sách ảnh
+    const imageSets = [
+        "cloud.jpg",
+        "VanAnh2.jpg",
+        "ntn.jpg"
+    ];
+
     let currentIndex = 0;
     let intervalId = null;
 
@@ -168,9 +175,10 @@
     const surpriseDiv = document.getElementById("surpriseImage");
     const autoImg = document.getElementById("autoImg");
 
+    // Tạo trái tim bay
     function createHeart() {
         const heart = document.createElement("img");
-        heart.src = "traitim.jpg";
+        heart.src = "traitim.jpg"; 
         heart.className = "heart";
         heart.style.left = Math.random() * window.innerWidth + "px";
         heart.style.width = (30 + Math.random() * 40) + "px";
@@ -183,23 +191,26 @@
         autoImg.src = imageSets[currentIndex];
 
         if(intervalId === null){
+            // Ảnh đầu tiên giữ 5 giây
             setTimeout(() => {
                 currentIndex++;
                 if(currentIndex < imageSets.length){
                     autoImg.src = imageSets[currentIndex];
                 }
 
+                // Sau đó chạy tiếp mỗi 2 giây, nhưng dừng khi hết ảnh
                 intervalId = setInterval(() => {
                     currentIndex++;
                     if(currentIndex < imageSets.length){
                         autoImg.src = imageSets[currentIndex];
                     } else {
-                        clearInterval(intervalId);
+                        clearInterval(intervalId); // dừng lại
                     }
                 }, 2000);
             }, 5000);
         }
 
+        // tạo trái tim bay lên
         for (let i = 0; i < 6; i++) {
             setTimeout(createHeart, i * 400);
         }
