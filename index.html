@@ -12,7 +12,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         overflow-x: hidden;
         position: relative;
-        min-height: 2000px;
+        min-height: 2000px; /* để có không gian cuộn */
     }
 
     .center-text {
@@ -30,6 +30,8 @@
         gap: 25px;
         flex-wrap: wrap;
         margin: 20px 0;
+        z-index: 1;
+        position: relative;
     }
 
     .image-row img {
@@ -41,7 +43,7 @@
     }
 
     .image-row img:hover {
-        transform: scale(1.1);
+        transform: scale(1.1); /* phóng to khi hover */
         box-shadow: 0 10px 20px rgba(0,0,0,0.35);
     }
 
@@ -66,24 +68,12 @@
         font-weight: bold;
     }
 
-    /* Trái tim bay lên */
     .heart-image {
         width: 40px;
         height: 40px;
         position: absolute;
-        pointer-events: none;
-    }
-
-    @media (max-width: 768px) {
-        .image-row {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .image-row img {
-            height: 250px;
-            margin-bottom: 15px;
-        }
+        pointer-events: none; /* không ảnh hưởng chuột */
+        z-index: 0;
     }
 </style>
 </head>
@@ -122,16 +112,17 @@
 
 <script>
     const numHearts = 20; // số lượng trái tim
-    const heartImgSrc = "traitim.jpg"; // đường dẫn ảnh trái tim
+    const heartImgSrc = "traitim.jpg"; // file traitim.jpg cùng thư mục với index.html
+
     const hearts = [];
 
-    for(let i=0; i<numHearts; i++){
+    for(let i = 0; i < numHearts; i++){
         const heart = document.createElement("img");
         heart.src = heartImgSrc;
         heart.className = "heart-image";
         heart.style.left = Math.random() * window.innerWidth + "px";
         heart.style.top = (window.innerHeight + Math.random() * 500) + "px"; // bắt đầu từ dưới màn hình
-        heart.speedY = 1 + Math.random() * 2; // tốc độ bay lên
+        heart.speedY = 1 + Math.random() * 2; // tốc độ bay lên khác nhau
         document.body.appendChild(heart);
         hearts.push(heart);
     }
@@ -139,11 +130,11 @@
     function animateHearts(){
         hearts.forEach(heart => {
             let y = parseFloat(heart.style.top);
-            y -= heart.speedY;
+            y -= heart.speedY; // bay lên
 
-            if(y < -50){
-                y = window.innerHeight + 50;
-                heart.style.left = Math.random() * window.innerWidth + "px";
+            if(y < -50){ // khi ra khỏi màn hình trên
+                y = window.innerHeight + 50; // quay lại dưới cùng
+                heart.style.left = Math.random() * window.innerWidth + "px"; // vị trí x mới
             }
 
             heart.style.top = y + "px";
