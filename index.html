@@ -8,11 +8,10 @@
     body {
         background: linear-gradient(to right, #ffcccc, #ffe6f0);
         margin: 0;
-        padding: 0;
+        padding: 0 0 300px 0; /* thêm khoảng trống 300px cuối trang */
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         overflow-x: hidden;
         position: relative;
-        min-height: 2000px; /* để có không gian cuộn */
     }
 
     .center-text {
@@ -30,8 +29,6 @@
         gap: 25px;
         flex-wrap: wrap;
         margin: 20px 0;
-        z-index: 1;
-        position: relative;
     }
 
     .image-row img {
@@ -43,7 +40,7 @@
     }
 
     .image-row img:hover {
-        transform: scale(1.1); /* phóng to khi hover */
+        transform: scale(1.1);
         box-shadow: 0 10px 20px rgba(0,0,0,0.35);
     }
 
@@ -68,12 +65,55 @@
         font-weight: bold;
     }
 
-    .heart-image {
+    .btn-change {
+        display: block;
+        margin: 30px auto;
+        padding: 12px 25px;
+        font-size: 20px;
+        background-color: #d6336c;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-change:hover {
+        background-color: #ff3399;
+    }
+
+    /* ảnh xuất hiện dưới nút */
+    .surprise-image {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .surprise-image img {
+        height: 350px;
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    /* trái tim bay */
+    .heart {
+        position: fixed;
+        bottom: 0;
         width: 40px;
         height: 40px;
-        position: absolute;
-        pointer-events: none; /* không ảnh hưởng chuột */
-        z-index: 0;
+        animation: floatUp 4s linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-700px) scale(1.5);
+            opacity: 0;
+        }
     }
 </style>
 </head>
@@ -110,40 +150,67 @@
     <li>Không đanh đá</li>
 </ul>
 
+<!-- Nút bấm ở dưới cùng -->
+<button class="btn-change" id="changeBtn">Bấm để bất ngờ 💖</button>
+
+<!-- Ảnh xuất hiện dưới nút -->
+<div class="surprise-image" id="surpriseImage" style="display:none;">
+    <img id="autoImg" src="" alt="Bất ngờ">
+</div>
+
 <script>
-    const numHearts = 20; // số lượng trái tim
-    const heartImgSrc = "traitim.jpg"; // file traitim.jpg cùng thư mục với index.html
+    // Danh sách ảnh
+    const imageSets = [
+        "cloud.jpg",
+        "VanAnh2.jpg",
+        "ntn.jpg"
+    ];
 
-    const hearts = [];
+    let currentIndex = 0;
+    let intervalId = null;
 
-    for(let i = 0; i < numHearts; i++){
+    const changeBtn = document.getElementById("changeBtn");
+    const surpriseDiv = document.getElementById("surpriseImage");
+    const autoImg = document.getElementById("autoImg");
+
+    function createHeart() {
         const heart = document.createElement("img");
-        heart.src = heartImgSrc;
-        heart.className = "heart-image";
+        heart.src = "traitim.jpg"; 
+        heart.className = "heart";
         heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.top = (window.innerHeight + Math.random() * 500) + "px"; // bắt đầu từ dưới màn hình
-        heart.speedY = 1 + Math.random() * 2; // tốc độ bay lên khác nhau
+        heart.style.width = (30 + Math.random() * 40) + "px";
         document.body.appendChild(heart);
-        hearts.push(heart);
+        setTimeout(() => heart.remove(), 4000);
     }
 
-    function animateHearts(){
-        hearts.forEach(heart => {
-            let y = parseFloat(heart.style.top);
-            y -= heart.speedY; // bay lên
+    changeBtn.addEventListener("click", () => {
+        surpriseDiv.style.display = "flex"; 
+        autoImg.src = imageSets[currentIndex];
 
-            if(y < -50){ // khi ra khỏi màn hình trên
-                y = window.innerHeight + 50; // quay lại dưới cùng
-                heart.style.left = Math.random() * window.innerWidth + "px"; // vị trí x mới
-            }
+        if(intervalId === null){
+            // Ảnh đầu tiên giữ 5 giây
+            setTimeout(() => {
+                currentIndex++;
+                if(currentIndex < imageSets.length){
+                    autoImg.src = imageSets[currentIndex];
+                }
 
-            heart.style.top = y + "px";
-        });
+                // Sau đó chạy tiếp mỗi 2 giây, nhưng sẽ dừng khi hết ảnh
+                intervalId = setInterval(() => {
+                    currentIndex++;
+                    if(currentIndex < imageSets.length){
+                        autoImg.src = imageSets[currentIndex];
+                    } else {
+                        clearInterval(intervalId); // dừng lại khi hết ảnh
+                    }
+                }, 2000);
+            }, 5000);
+        }
 
-        requestAnimationFrame(animateHearts);
-    }
-
-    animateHearts();
+        for (let i = 0; i < 6; i++) {
+            setTimeout(createHeart, i * 400);
+        }
+    });
 </script>
 
 </body>
