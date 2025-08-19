@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Những Thứ Về TTrâm Anh</title>
+<title>Những Thứ Về Vân Anh</title>
 <style>
     body {
         background: linear-gradient(to right, #ffcccc, #ffe6f0);
@@ -120,23 +119,36 @@
 </head>
 <body>
 
-<p class="center-text">NHỮNG THỨ VỀ TRÂM ANH</p>
+<p class="center-text">NHỮNG THỨ VỀ VÂN ANH</p>
 
 <div class="image-row">
-    <img src="tramanh.jpg" alt="Vân Anh">
-    <img src="tramanh2.jpg" alt="Vân Anh 1">
-    <img src="tramanh1.jpg" alt="Vân Anh 1">
-    <img src="tramanh3.jpg" alt="Vân Anh 1">
+    <img src="VanAnh.jpg" alt="Vân Anh">
+    <img src="VanAnh1.jpg" alt="Vân Anh 1">
 </div>
 
+<h1 class="section-title">QUÊ QUÁN</h1>
+<ul>
+    <li>Hải Phòng</li>
+    <li>Sinh năm 2k15</li>
+</ul>
 
 <h1 class="section-title">CÁC SỞ THÍCH</h1>
 <ul>
-    <li>Thích sờ bòi</li>
-    <li>Thích ăn cứt</li>
-    <li>Thích uống nước đái</li>
+    <li>Hát</li>
+    <li>Vẽ</li>
+    <li>Đi chơi</li>
 </ul>
 
+<h1 class="section-title">TÍNH CÁCH & NGOẠI HÌNH</h1>
+<ul>
+    <li>Hiền dịu</li>
+    <li>Giản dị</li>
+    <li>Hay chăm sóc người khác</li>
+    <li>Xinh đẹp</li>
+    <li>Dễ thương</li>
+    <li>Hay giận dỗi</li>
+    <li>Không đanh đá</li>
+</ul>
 
 <!-- Nút bấm ở dưới cùng -->
 <button class="btn-change" id="changeBtn">Bấm để bất ngờ 💖</button>
@@ -149,11 +161,9 @@
 <script>
     // Danh sách ảnh
     const imageSets = [
-        "anhdim.jpg",
-        "tramanh.jpg",
-        "tramanh1.jpg",
-        
-        
+        "cloud.jpg",
+        "VanAnh2.jpg",
+        "ntn.jpg"
     ];
 
     let currentIndex = 0;
@@ -194,7 +204,7 @@
                     } else {
                         clearInterval(intervalId); // dừng lại
                     }
-                }, 1000);
+                }, 2000);
             }, 5000);
         }
 
